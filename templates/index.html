@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-center text-white" style="margin-top: 50px;">
+    
+    <h1 class="display-3 fw-bold mb-3">Welcome to <span class="text-warning">Smart Tutor</span></h1>
+    <p class="lead mb-5 opacity-75">Your AI-powered study companion. Summarize videos, track progress, and take quizzes.</p>
+
+    <div class="row g-4">
+        
+        <div class="col-md-4">
+            <div class="glass-card h-100 text-center">
+                <div class="mb-3">
+                    <i class="fa-brands fa-youtube fa-3x text-danger"></i>
+                </div>
+                <h3>Video Summarizer</h3>
+                <p class="text-white-50">Paste any educational video link and get instant notes & summaries.</p>
+                <a href="/youtube" class="btn btn-outline-light mt-2">Try Now</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="glass-card h-100 text-center">
+                <div class="mb-3">
+                    <i class="fa-solid fa-brain fa-3x text-primary"></i>
+                </div>
+                <h3>AI Quiz & Chat</h3>
+                <p class="text-white-50">Test your knowledge with adaptive quizzes or ask doubts to AI.</p>
+                <a href="/chat" class="btn btn-outline-light mt-2">Start Quiz</a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="glass-card h-100 text-center">
+                <div class="mb-3">
+                    <i class="fa-solid fa-chart-pie fa-3x text-success"></i>
+                </div>
+                <h3>Student Dashboard</h3>
+                <p class="text-white-50">Track your learning progress and performance graphs.</p>
+                <a href="/dashboard" class="btn btn-outline-light mt-2">View Stats</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

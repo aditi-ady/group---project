@@ -1,0 +1,79 @@
+/* Google Font */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* Navbar Styling */
+.navbar {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: #fff !important;
+    transform: translateY(-2px);
+}
+
+/* Main Container spacing from Navbar */
+.main-content {
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+/* Glassmorphism Card Style (Jo hum har jagah use karenge) */
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    padding: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Custom Buttons */
+.btn-primary {
+    background: linear-gradient(45deg, #4e54c8, #8f94fb);
+    border: none;
+    box-shadow: 0 4px 15px rgba(78, 84, 200, 0.4);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #3f44a5, #7a7fe0);
+    transform: scale(1.05);
+}
+
+/* Input Fields Style */
+.form-control {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #8f94fb;
+    color: #fff;
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}

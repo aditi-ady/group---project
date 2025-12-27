@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-white h-100">
+
+    <div class="row justify-content-center h-100">
+        <div class="col-md-8 col-lg-6">
+            
+            <div class="text-center mb-4">
+                <h2 class="fw-bold"><i class="fa-solid fa-robot text-warning"></i> AI <span class="text-primary">Tutor</span></h2>
+                <p class="opacity-75">Ask doubts or say "Take a Quiz on Python" to start testing yourself!</p>
+            </div>
+
+            <div class="glass-card d-flex flex-column" style="height: 60vh;">
+                
+                <div id="chat-box" class="flex-grow-1 p-3" style="overflow-y: auto; scrollbar-width: thin;">
+                    
+                    <div class="d-flex flex-row justify-content-start mb-3">
+                        <div class="p-3 text-white rounded-3 shadow-sm" style="background: rgba(255,255,255,0.1); max-width: 80%;">
+                            <span class="fw-bold text-warning small">AI Tutor</span><br>
+                            Hello! 👋 I am here to help you learn. Ask me anything or type <b>"Quiz me on [Topic]"</b> to start a quiz.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="p-3 border-top border-secondary">
+                    <div class="input-group">
+                        <input type="text" id="user-input" class="form-control border-0 text-white" 
+                               placeholder="Type your message..." 
+                               style="background: rgba(0,0,0,0.3);" onkeypress="handleEnter(event)">
+                        <button class="btn btn-primary px-4" onclick="sendMessage()">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
