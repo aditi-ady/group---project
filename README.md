@@ -1,2 +1,4 @@
 # group---project
-group project  for learning github  and collaboration
+This is an AI group project.
+We are learning Github collaboration.
+Created by team members.
