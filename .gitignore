@@ -1,0 +1,10 @@
+venv/
+instance/
+*.db
+.env
+
+
+
+
+
+

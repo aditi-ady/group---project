@@ -1,35 +1,168 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container text-white h-100">
 
-    <div class="row justify-content-center h-100">
+<style>
+/* ===== FONT ===== */
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ===== LIGHT MULTI-COLOR BACKGROUND (MAIN AREA) ===== */
+.chat-page {
+    background: linear-gradient(
+        135deg,
+        #fdfbfb 0%,
+        #ebedee 30%,
+        #e0f2fe 65%,
+        #fce7f3 100%
+    );
+    min-height: calc(100vh - 100px);
+    padding-top: 40px;
+}
+
+/* ===== HEADING (STROKE + FILL) ===== */
+.chat-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #111827;                 /* fill */
+    -webkit-text-stroke: 1px #6b7280; /* stroke */
+    letter-spacing: 1px;
+}
+
+.chat-subtitle {
+    color: #374151;
+    font-size: 1rem;
+}
+
+/* ===== CHAT CARD ===== */
+.chat-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 28px;
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.6s ease;
+}
+
+/* ===== CHAT BOX ===== */
+#chat-box {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 1.6rem;
+    overflow-y: auto;
+}
+
+/* ===== AI MESSAGE ===== */
+.ai-msg {
+    background: #f9fafb;
+    color: #111827;
+    border-radius: 18px;
+    padding: 14px 18px;
+    max-width: 80%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.ai-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+/* ===== INPUT AREA ===== */
+.chat-input {
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    border-radius: 0 0 28px 28px;
+}
+
+/* ===== INPUT FIELD ===== */
+#user-input {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 14px;
+    font-size: 0.95rem;
+    color: #111827;
+}
+
+#user-input::placeholder {
+    color: #9ca3af;
+}
+
+#user-input:focus {
+    outline: none;
+    border-color: #94a3b8;
+    box-shadow: none;
+}
+
+/* ===== SEND BUTTON ===== */
+.chat-send {
+    background: linear-gradient(135deg, #38bdf8, #fb7185);
+    border: none;
+    border-radius: 16px;
+    padding: 0 22px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(56, 189, 248, 0.45);
+    transition: all 0.25s ease;
+}
+
+.chat-send:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(251, 113, 133, 0.5);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<div class="container-fluid chat-page">
+
+    <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            
+
+            <!-- HEADER -->
             <div class="text-center mb-4">
-                <h2 class="fw-bold"><i class="fa-solid fa-robot text-warning"></i> AI <span class="text-primary">Tutor</span></h2>
-                <p class="opacity-75">Ask doubts or say "Take a Quiz on Python" to start testing yourself!</p>
+                <h2 class="chat-title">AI TUTOR</h2>
+                <p class="chat-subtitle">
+                    Ask doubts or say "Take a Quiz on Python" to start testing yourself!
+                </p>
             </div>
 
-            <div class="glass-card d-flex flex-column" style="height: 60vh;">
-                
-                <div id="chat-box" class="flex-grow-1 p-3" style="overflow-y: auto; scrollbar-width: thin;">
-                    
-                    <div class="d-flex flex-row justify-content-start mb-3">
-                        <div class="p-3 text-white rounded-3 shadow-sm" style="background: rgba(255,255,255,0.1); max-width: 80%;">
-                            <span class="fw-bold text-warning small">AI Tutor</span><br>
-                            Hello! 👋 I am here to help you learn. Ask me anything or type <b>"Quiz me on [Topic]"</b> to start a quiz.
+            <!-- CHAT CARD -->
+            <div class="chat-card d-flex flex-column" style="height: 60vh;">
+
+                <!-- CHAT BOX -->
+                <div id="chat-box" class="flex-grow-1">
+
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="ai-msg">
+                            <span class="ai-label">AI Tutor</span><br>
+                            Hello! 👋 I am here to help you learn. Ask me anything or type
+                            <b>"Quiz me on [Topic]"</b> to start a quiz.
                         </div>
                     </div>
 
                 </div>
 
-                <div class="p-3 border-top border-secondary">
+                <!-- INPUT -->
+                <div class="p-3 chat-input">
                     <div class="input-group">
-                        <input type="text" id="user-input" class="form-control border-0 text-white" 
-                               placeholder="Type your message..." 
-                               style="background: rgba(0,0,0,0.3);" onkeypress="handleEnter(event)">
-                        <button class="btn btn-primary px-4" onclick="sendMessage()">
+                        <input
+                            type="text"
+                            id="user-input"
+                            class="form-control"
+                            placeholder="Type your message..."
+                            onkeypress="handleEnter(event)"
+                        >
+                        <button class="chat-send btn" onclick="sendMessage()">
                             <i class="fa-solid fa-paper-plane"></i>
                         </button>
                     </div>
@@ -40,4 +173,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

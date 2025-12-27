@@ -1,10 +1,135 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<style>
+/* ===== GOOGLE FONT ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ===== BACKGROUND (SAME AS LOGIN) ===== */
+body {
+    background:
+        radial-gradient(circle at 10% 20%, rgba(255, 200, 221, 0.6), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(189, 224, 254, 0.7), transparent 40%),
+        linear-gradient(120deg, #f8fafc, #eef2ff);
+    min-height: 100vh;
+}
+
+/* ===== GLASS CARD ===== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(22px);
+    border-radius: 28px;
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: floatIn 0.8s ease;
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== TITLE ===== */
+h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    background: linear-gradient(90deg, #4338ca, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+}
+
+/* ===== LABELS ===== */
+label {
+    color: #374151;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+/* ===== INPUTS ===== */
+.form-control {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 14px;
+    font-size: 0.95rem;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+/* ===== EMAIL FIELD HIGHLIGHT (LIKE LOGIN) ===== */
+input[type="email"] {
+    border: 2px solid #c7d2fe;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
+}
+
+.form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.35);
+}
+
+/* ===== BUTTON ===== */
+.btn-primary {
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    border: none;
+    border-radius: 18px;
+    padding: 14px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    transition: all 0.35s ease;
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(236, 72, 153, 0.45);
+}
+
+/* ===== ALERTS ===== */
+.alert {
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e5e7eb;
+    color: #111827;
+}
+
+/* ===== FOOTER TEXT ===== */
+.text-white-50 {
+    color: #6b7280 !important;
+}
+
+/* ===== LINK ===== */
+a.text-warning {
+    color: #4338ca !important;
+    transition: all 0.3s ease;
+}
+
+a.text-warning:hover {
+    color: #ec4899 !important;
+    text-shadow: 0 0 8px rgba(236, 72, 153, 0.6);
+}
+</style>
+
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="col-md-5">
         <div class="glass-card p-5">
-            <h2 class="text-center mb-4 fw-bold">Create Account</h2>
+
+            <h2 class="text-center mb-4">Create Account</h2>
 
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -15,25 +140,52 @@
             {% endwith %}
 
             <form method="POST" action="/signup">
+
                 <div class="mb-3">
                     <label>Username</label>
-                    <input type="text" name="username" class="form-control" placeholder="John Doe" required>
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        placeholder="John Doe"
+                        required
+                    >
                 </div>
+
                 <div class="mb-3">
                     <label>Email Address</label>
-                    <input type="email" name="email" class="form-control" placeholder="student@example.com" required>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="student@example.com"
+                        required
+                    >
                 </div>
+
                 <div class="mb-4">
                     <label>Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="••••••" required>
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="••••••"
+                        required
+                    >
                 </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Sign Up</button>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3">
+                    Sign Up
+                </button>
             </form>
-            
+
             <p class="text-center text-white-50">
-                Already have an account? <a href="/login" class="text-warning fw-bold">Login</a>
+                Already have an account?
+                <a href="/login" class="text-warning fw-bold">Login</a>
             </p>
+
         </div>
     </div>
 </div>
+
 {% endblock %}

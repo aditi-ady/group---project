@@ -1,10 +1,164 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+
+<style>
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ===== BACKGROUND ===== */
+body {
+    background:
+        radial-gradient(circle at 10% 20%, rgba(255, 200, 221, 0.6), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(189, 224, 254, 0.7), transparent 40%),
+        linear-gradient(120deg, #f8fafc, #eef2ff);
+    min-height: 100vh;
+    animation: bgMove 12s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove {
+    from {
+        background-position: 0% 0%, 100% 100%, 0% 50%;
+    }
+    to {
+        background-position: 10% 20%, 90% 80%, 100% 50%;
+    }
+}
+
+/* ===== GLASS CARD ===== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border-radius: 28px;
+    padding: 3rem;
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: floatIn 0.9s ease forwards;
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== TITLE ===== */
+h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    background: linear-gradient(90deg, #4338ca, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+}
+
+/* ===== LABELS ===== */
+label {
+    color: #374151;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+/* ===== INPUTS ===== */
+.form-control {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 14px;
+    font-size: 0.95rem;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+/* 🔥 EMAIL FIELD HIGHLIGHT */
+input[type="email"] {
+    border: 2px solid #c7d2fe;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
+}
+
+input[type="email"]:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.35);
+}
+
+/* OTHER INPUT FOCUS */
+.form-control:focus {
+    border-color: #a5b4fc;
+    box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.25);
+}
+
+/* ===== BUTTON ===== */
+.btn-primary {
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    border: none;
+    border-radius: 18px;
+    padding: 14px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    transition: all 0.35s ease;
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(236, 72, 153, 0.45);
+}
+
+/* ===== ALERTS ===== */
+.alert {
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e5e7eb;
+    color: #111827;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== FOOTER TEXT ===== */
+.text-white-50 {
+    color: #6b7280 !important;
+}
+
+/* ===== LINK ===== */
+a.text-warning {
+    color: #4338ca !important;
+    transition: all 0.3s ease;
+}
+
+a.text-warning:hover {
+    color: #ec4899 !important;
+    text-shadow: 0 0 8px rgba(236, 72, 153, 0.6);
+}
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
     <div class="col-md-5">
-        <div class="glass-card p-5">
-            <h2 class="text-center mb-4 fw-bold">Login</h2>
+        <div class="glass-card">
+            <h2 class="text-center mb-4">Login</h2>
 
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -23,13 +177,15 @@
                     <label>Password</label>
                     <input type="password" name="password" class="form-control" placeholder="••••••" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Login</button>
+                <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
             </form>
-            
+
             <p class="text-center text-white-50">
-                Don't have an account? <a href="/signup" class="text-warning fw-bold">Sign Up</a>
+                Don't have an account?
+                <a href="/signup" class="text-warning fw-bold">Sign Up</a>
             </p>
         </div>
     </div>
 </div>
+
 {% endblock %}

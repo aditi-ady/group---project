@@ -1,73 +1,175 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container text-white">
-    
-    <div class="row mb-4 align-items-center">
-        <div class="col-md-8">
-            <h2 class="fw-bold display-5">Hello, <span class="text-warning">{{ user.username }}</span>! 👋</h2>
-            <p class="lead opacity-75">Here is your learning progress for this week.</p>
-        </div>
-        <div class="col-md-4 text-end">
-            <a href="/youtube" class="btn btn-primary rounded-pill px-4 shadow-lg">
-                <i class="fa-solid fa-play"></i> Start New Topic
-            </a>
-        </div>
-    </div>
 
-    <div class="row g-4 mb-5">
-        
-        <div class="col-md-3">
-            <div class="glass-card p-4 text-center">
-                <i class="fa-solid fa-video fa-2x text-info mb-3"></i>
-                <h3 class="fw-bold">{{ user.videos_watched }}</h3>
-                <p class="small text-white-50">Videos Summarized</p>
+<style>
+/* ===== FONT ===== */
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ===== PAGE BACKGROUND ===== */
+.dashboard-page {
+    background: linear-gradient(
+        135deg,
+        #fdfbfb 0%,
+        #ebedee 30%,
+        #e0f2fe 65%,
+        #fce7f3 100%
+    );
+    min-height: calc(100vh - 100px);
+    padding: 40px 20px;
+}
+
+/* ===== PAGE CONTAINER WITH BORDER (MAIN FIX) ===== */
+.dashboard-wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== HEADER ===== */
+.dashboard-title {
+    font-weight: 700;
+    color: #111827;
+}
+
+.dashboard-subtitle {
+    color: #374151;
+}
+
+/* ===== BUTTON ===== */
+.btn-primary {
+    background: linear-gradient(135deg, #38bdf8, #fb7185);
+    border: none;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(251, 113, 133, 0.5);
+}
+
+/* ===== GLASS CARD ===== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+    transition: transform 0.25s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+}
+
+/* ===== STAT TEXT ===== */
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+/* ===== PERFORMANCE TITLE ===== */
+.performance-title {
+    font-weight: 600;
+    color: #111827;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 8px;
+}
+</style>
+
+<div class="container-fluid dashboard-page">
+
+    <!-- PAGE BORDER WRAPPER -->
+    <div class="dashboard-wrapper">
+
+        <!-- HEADER -->
+        <div class="row mb-5 align-items-center">
+            <div class="col-md-8">
+                <h2 class="dashboard-title display-6">
+                    Hello, <span style="color:#fb7185">{{ user.username }}</span>! 👋
+                </h2>
+                <p class="dashboard-subtitle">
+                    Here is your learning progress for this week.
+                </p>
             </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="glass-card p-4 text-center">
-                <i class="fa-solid fa-star fa-2x text-warning mb-3"></i>
-                <h3 class="fw-bold">{{ user.points }}</h3>
-                <p class="small text-white-50">Total Points</p>
-            </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="glass-card p-4 text-center">
-                <i class="fa-solid fa-brain fa-2x text-danger mb-3"></i>
-                <h3 class="fw-bold">{{ user.quiz_average }}%</h3>
-                <p class="small text-white-50">Quiz Average</p>
-            </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="glass-card p-4 text-center">
-                <i class="fa-solid fa-fire fa-2x text-danger mb-3"></i>
-                <h3 class="fw-bold">{{ user.streak }} Days</h3>
-                <p class="small text-white-50">Learning Streak</p>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="/youtube" class="btn btn-primary rounded-pill px-4">
+                    <i class="fa-solid fa-play"></i> Start New Topic
+                </a>
             </div>
         </div>
 
-    </div>
+        <!-- STATS -->
+        <div class="row g-4 mb-5">
 
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="glass-card p-4">
-                <h4 class="mb-4 border-bottom pb-2 border-secondary">
-                    <i class="fa-solid fa-chart-simple text-success"></i> Subject Performance
-                </h4>
-                
-                <div class="text-center">
-                    {% if graph_image %}
-                        <img src="{{ graph_image }}" alt="Performance Graph" class="img-fluid rounded shadow-sm" style="border: 1px solid rgba(255,255,255,0.2);">
-                    {% else %}
-                        <p class="text-white-50">No data available yet.</p>
-                    {% endif %}
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <i class="fa-solid fa-video fa-2x text-info mb-3"></i>
+                    <div class="stat-value">{{ user.videos_watched }}</div>
+                    <div class="stat-label">Videos Summarized</div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <i class="fa-solid fa-star fa-2x text-warning mb-3"></i>
+                    <div class="stat-value">{{ user.points }}</div>
+                    <div class="stat-label">Total Points</div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <i class="fa-solid fa-brain fa-2x text-danger mb-3"></i>
+                    <div class="stat-value">{{ user.quiz_average }}%</div>
+                    <div class="stat-label">Quiz Average</div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="glass-card p-4 text-center">
+                    <i class="fa-solid fa-fire fa-2x text-danger mb-3"></i>
+                    <div class="stat-value">{{ user.streak }} Days</div>
+                    <div class="stat-label">Learning Streak</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PERFORMANCE GRAPH (UNCHANGED) -->
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="glass-card p-4">
+                    <h4 class="performance-title mb-4">
+                        <i class="fa-solid fa-chart-simple text-success"></i>
+                        Subject Performance
+                    </h4>
+
+                    <div class="text-center">
+                        {% if graph_image %}
+                            <img
+                                src="{{ graph_image }}"
+                                alt="Performance Graph"
+                                class="img-fluid rounded shadow-sm"
+                            >
+                        {% else %}
+                            <p class="text-muted">No data available yet.</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
+
 {% endblock %}
