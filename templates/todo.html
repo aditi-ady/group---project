@@ -1,106 +1,239 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container py-5 text-white">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold"><i class="fa-solid fa-list-check text-success"></i> My Study <span class="text-info">Goals</span></h2>
-                <p class="opacity-75">Add topics you want to finish today!</p>
-            </div>
 
-            <div class="glass-card p-4">
-                <div class="input-group mb-4">
-                    <input type="text" id="taskInput" class="form-control bg-dark text-white border-secondary p-3" placeholder="Enter topic (e.g., Learn SQL Joins)..." onkeypress="handleEnter(event)">
-                    <button class="btn btn-success px-4" onclick="addTask()">
-                        <i class="fa-solid fa-plus"></i> Add
-                    </button>
+<style>
+/* ===== PAGE BACKGROUND ===== */
+.todo-page {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(255, 221, 153, 0.7), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(255, 183, 77, 0.6), transparent 40%),
+        linear-gradient(135deg, #fff7e6, #ffe0b2);
+    min-height: calc(100vh - 90px);
+    padding: 40px 15px;
+}
+
+/* ===== HEADER ===== */
+.todo-title {
+    font-weight: 800;
+    color: #111827;
+}
+
+.todo-title span {
+    background: linear-gradient(135deg, #ff512f, #f09819);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.todo-subtitle {
+    color: #374151;
+}
+
+/* ===== MAIN CARD ===== */
+.todo-card {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 28px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+}
+
+/* ===== INPUT ===== */
+.form-control {
+    border-radius: 16px;
+    padding: 14px;
+    font-size: 0.95rem;
+}
+
+/* ===== ADD BUTTON ===== */
+.btn-success {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border: none;
+    font-weight: 600;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== TASK ITEM ===== */
+.todo-item {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #fde68a;
+    padding: 14px 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.todo-item:hover {
+    transform: translateY(-3px);
+}
+
+/* ===== TASK TEXT ===== */
+.todo-text {
+    color: #111827;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+/* ===== CHECK BUTTON ===== */
+.btn-outline-primary {
+    border-radius: 50%;
+    border: 1px solid #f59e0b;
+    color: #f59e0b;
+}
+
+.btn-outline-primary:hover {
+    background: #f59e0b;
+    color: white;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-text {
+    color: #6b7280;
+}
+
+/* ===== ANIMATION ===== */
+.fade-in {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<div class="todo-page">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <!-- HEADER -->
+                <div class="text-center mb-5">
+                    <h2 class="todo-title">
+                        <i class="fa-solid fa-list-check me-2 text-success"></i>
+                        My Study <span>Goals</span>
+                    </h2>
+                    <p class="todo-subtitle">
+                        Add topics you want to finish today!
+                    </p>
                 </div>
 
-                <div id="todoList">
-                    {% if todos %}
-                        {% for todo in todos %}
-                            <div class="d-flex align-items-center justify-content-between p-3 mb-3 rounded bg-dark bg-opacity-25 fade-in" id="task-{{ todo.id }}">
-                                <span class="text-white fs-5">{{ todo.task }}</span>
-                                <button class="btn btn-outline-info rounded-circle" onclick="completeTask({{ todo.id }})" title="Mark as Done">
-                                    <i class="fa-solid fa-check"></i>
-                                </button>
+                <!-- CARD -->
+                <div class="todo-card">
+
+                    <!-- INPUT -->
+                    <div class="input-group mb-4">
+                        <input
+                            type="text"
+                            id="taskInput"
+                            class="form-control"
+                            placeholder="Enter topic (e.g., Learn SQL Joins)..."
+                            onkeypress="handleEnter(event)"
+                        >
+                        <button class="btn btn-success px-4" onclick="addTask()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+
+                    <!-- TASK LIST -->
+                    <div id="todoList">
+
+                        {% if todos %}
+                            {% for todo in todos %}
+                                <div class="todo-item mb-3 fade-in" id="task-{{ todo.id }}">
+                                    <span class="todo-text">
+                                        {{ todo.task }}
+                                    </span>
+                                    <button
+                                        class="btn btn-outline-primary"
+                                        onclick="completeTask({{ todo.id }})"
+                                        title="Mark as Done"
+                                    >
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div id="emptyMsg" class="text-center py-5 empty-text">
+                                <i class="fa-solid fa-clipboard-list fa-3x mb-3"></i>
+                                <p>No tasks yet. Start by adding one!</p>
                             </div>
-                        {% endfor %}
-                    {% else %}
-                        <div id="emptyMsg" class="text-center py-5 text-white-50">
-                            <i class="fa-solid fa-clipboard-list fa-3x mb-3"></i>
-                            <p>No tasks yet. Start by adding one!</p>
-                        </div>
-                    {% endif %}
+                        {% endif %}
+
+                    </div>
                 </div>
+
             </div>
         </div>
+
     </div>
 </div>
 
 <script>
-    async function addTask() {
-        const input = document.getElementById('taskInput');
-        const taskText = input.value.trim();
-        if(!taskText) return;
+async function addTask() {
+    const input = document.getElementById('taskInput');
+    const taskText = input.value.trim();
+    if(!taskText) return;
 
-        const res = await fetch('/api/add_todo', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({task: taskText})
-        });
-        const data = await res.json();
-        
-        if(data.success) {
-            input.value = '';
-            const list = document.getElementById('todoList');
-            const emptyMsg = document.getElementById('emptyMsg');
-            if(emptyMsg) emptyMsg.remove();
+    const res = await fetch('/api/add_todo', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({task: taskText})
+    });
+    const data = await res.json();
 
-            const div = document.createElement('div');
-            div.className = "d-flex align-items-center justify-content-between p-3 mb-3 rounded bg-dark bg-opacity-25 fade-in";
-            div.id = `task-${data.id}`;
-            div.innerHTML = `
-                <span class="text-white fs-5">${data.task}</span>
-                <button class="btn btn-outline-info rounded-circle" onclick="completeTask(${data.id})" title="Mark as Done">
-                    <i class="fa-solid fa-check"></i>
-                </button>
-            `;
-            list.prepend(div);
-        }
+    if(data.success) {
+        input.value = '';
+        const list = document.getElementById('todoList');
+        const emptyMsg = document.getElementById('emptyMsg');
+        if(emptyMsg) emptyMsg.remove();
+
+        const div = document.createElement('div');
+        div.className = "todo-item mb-3 fade-in";
+        div.id = `task-${data.id}`;
+
+        div.innerHTML = `
+            <span class="todo-text">${data.task}</span>
+            <button class="btn btn-outline-primary"
+                    onclick="completeTask(${data.id})">
+                <i class="fa-solid fa-check"></i>
+            </button>
+        `;
+        list.prepend(div);
     }
+}
 
-    async function completeTask(id) {
-        const res = await fetch('/api/delete_todo', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({id: id})
-        });
-        const data = await res.json();
-        
-        if(data.success) {
-            const el = document.getElementById(`task-${id}`);
-            // Disappear Animation
-            el.style.transition = "all 0.5s ease";
-            el.style.opacity = "0";
-            el.style.transform = "translateX(50px)";
-            setTimeout(() => {
-                el.remove();
-                if(document.getElementById('todoList').children.length === 0) {
-                    location.reload(); // Reload to show empty message
-                }
-            }, 500);
-        }
-    }
+async function completeTask(id) {
+    const res = await fetch('/api/delete_todo', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id: id})
+    });
+    const data = await res.json();
 
-    function handleEnter(e) {
-        if(e.key === 'Enter') addTask();
+    if(data.success) {
+        const el = document.getElementById(`task-${id}`);
+        el.style.opacity = "0";
+        el.style.transform = "translateX(40px)";
+        setTimeout(() => el.remove(), 400);
     }
+}
+
+function handleEnter(e) {
+    if(e.key === 'Enter') addTask();
+}
 </script>
 
-<style>
-    .fade-in { animation: fadeIn 0.5s ease-in-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-</style>
 {% endblock %}
