@@ -13,21 +13,27 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key_for_hackathon' 
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 GENAI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GENAI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-2.5-flash')  
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -57,6 +63,7 @@ class Todo(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 def generate_performance_graph(user_scores_json):
     try: scores_dict = json.loads(user_scores_json)
     except: scores_dict = {"Math": 0, "Science": 0, "AI": 0}
@@ -70,6 +77,7 @@ def generate_performance_graph(user_scores_json):
     img = io.BytesIO(); plt.savefig(img, format='png', bbox_inches='tight', transparent=True); img.seek(0)
     graph_url = base64.b64encode(img.getvalue()).decode(); plt.close()
     return f"data:image/png;base64,{graph_url}"
+
 
 @app.route('/')
 def home():
@@ -124,6 +132,8 @@ def todo_page():
     user_todos = Todo.query.filter_by(user_id=current_user.id).all()
     return render_template('todo.html', todos=user_todos)
 
+
+
 @app.route('/api/update_quiz_stats', methods=['POST'])
 @login_required
 def update_quiz_stats():
@@ -144,18 +154,54 @@ def update_quiz_stats():
     db.session.commit()
     return jsonify({'success': True})
 
+
 @app.route('/api/chat', methods=['POST'])
 @login_required
 def ai_chat():
     data = request.get_json()
-    prompt = f"User: {data.get('message')}. Return JSON: {{'type': 'chat', 'reply': 'Answer'}}"
-    if "quiz" in data.get('message').lower():
-        prompt = f"User: {data.get('message')}. Return JSON: {{'type': 'quiz', 'subject': 'Topic', 'questions': [...]}}"
+    user_msg = data.get('message', '')
+    
+    # Base Prompt
+    prompt = f"""Act as a friendly AI Tutor.
+    User Message: "{user_msg}"
+    Response Format: Return ONLY raw JSON. No Markdown.
+    {{ "type": "chat", "reply": "Your answer here" }}
+    """
+
+    # Quiz Specific Prompt
+    if "quiz" in user_msg.lower():
+        prompt = f"""Create a short quiz on: "{user_msg}".
+        Generate 3 to 5 multiple-choice questions.
+        
+        CRITICAL: Return ONLY raw JSON. NO markdown.
+        Structure:
+        {{
+            "type": "quiz",
+            "subject": "Topic Name",
+            "questions": [
+                {{
+                    "question": "Question text?",
+                    "options": ["A", "B", "C", "D"],
+                    "correct": "A"
+                }}
+            ]
+        }}
+        """
+
     try:
         response = model.generate_content(prompt)
-        text = response.text.strip().replace("```json", "").replace("```", "")
+        text = response.text.strip()
+        
+        
+        if text.startswith("```json"): text = text[7:]
+        if text.startswith("```"): text = text[3:]
+        if text.endswith("```"): text = text[:-3]
+        text = text.strip()
+        
         return jsonify(json.loads(text))
-    except: return jsonify({'type': 'chat', 'reply': "AI Error"})
+    except Exception as e:
+        print(f"AI Error: {e}")
+        return jsonify({'type': 'chat', 'reply': "I am thinking... try asking again!"})
 
 @app.route('/api/messages', methods=['GET'])
 @login_required

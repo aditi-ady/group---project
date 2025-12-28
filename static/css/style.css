@@ -9,10 +9,10 @@ body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(
         135deg,
-        #fdfbfb 0%,
-        #ebedee 30%,
-        #e0f2fe 65%,
-        #fce7f3 100%
+        #ffd89b 0%,
+        #fcb69f 35%,
+        #fda085 70%,
+        #f6d365 100%
     );
     color: #111827;
     min-height: 100vh;
@@ -24,37 +24,28 @@ body {
 ========================= */
 .navbar {
     backdrop-filter: blur(14px);
-    background: rgba(255, 255, 255, 0.9);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
-/* Brand (Smart Tutor) */
 .smart-brand {
-    color: #111827 !important;
     font-weight: 800;
-    letter-spacing: 0.6px;
+    color: #111827 !important;
 }
 
 .smart-brand span {
-    background: linear-gradient(135deg, #38bdf8, #fb7185);
+    background: linear-gradient(135deg, #ff512f, #f09819);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.navbar-brand i {
-    color: #fb7185;
-}
-
-/* Navbar links */
 .nav-link {
     color: #374151 !important;
     font-weight: 500;
-    transition: all 0.25s ease;
 }
 
 .nav-link:hover {
     color: #111827 !important;
-    transform: translateY(-2px);
 }
 
 /* =========================
@@ -62,121 +53,62 @@ body {
 ========================= */
 .main-content {
     padding-top: 100px;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
 }
 
 /* =========================
-   GLASS CARD
+   HERO TEXT
+========================= */
+.hero-title {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #111827;
+}
+
+.hero-gradient {
+    background: linear-gradient(135deg, #ff512f, #f09819);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    color: #374151;
+}
+
+/* =========================
+   CARDS
 ========================= */
 .glass-card {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 22px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
     padding: 2rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .glass-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.16);
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.18);
 }
 
 /* =========================
    BUTTONS
 ========================= */
 .btn-primary {
-    background: linear-gradient(135deg, #38bdf8, #fb7185);
+    background: linear-gradient(135deg, #ff512f, #f09819);
     border: none;
     font-weight: 600;
-    box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
-    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(240,152,25,0.4);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #0ea5e9, #f43f5e);
     transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(251, 113, 133, 0.5);
-}
-
-/* Outline buttons */
-.btn-outline-light {
-    color: #111827;
-    border: 1px solid #d1d5db;
-}
-
-.btn-outline-light:hover {
-    background: linear-gradient(135deg, #38bdf8, #fb7185);
-    color: #ffffff;
-    border-color: transparent;
-}
-
-/* =========================
-   FORMS & INPUTS
-========================= */
-.form-control {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    color: #111827;
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 0.95rem;
-    transition: all 0.25s ease;
-}
-
-.form-control::placeholder {
-    color: #9ca3af;
-}
-
-.form-control:focus {
-    background: #ffffff;
-    border-color: #94a3b8;
-    box-shadow: none;
-    color: #111827;
-}
-
-/* =========================
-   ALERTS
-========================= */
-.alert {
-    border-radius: 16px;
-    font-size: 0.9rem;
 }
 
 /* =========================
    TEXT HELPERS
 ========================= */
 .text-muted {
-    color: #6b7280 !important;
-}
-
-.text-white-50 {
-    color: #6b7280 !important;
-}
-
-/* =========================
-   IMAGES
-========================= */
-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
-}
-
-/* =========================
-   SCROLLBAR (OPTIONAL)
-========================= */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #38bdf8, #fb7185);
-    border-radius: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    color: #374151 !important;
 }
