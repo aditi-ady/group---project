@@ -1,115 +1,66 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<style>
-/* ===== FONT ===== */
-* {
-    font-family: 'Poppins', sans-serif;
-}
-
-/* ===== PAGE BACKGROUND (MATCH OTHERS) ===== */
-.home-page {
-    background: linear-gradient(
-        135deg,
-        #fdfbfb 0%,
-        #ebedee 30%,
-        #e0f2fe 65%,
-        #fce7f3 100%
-    );
-    min-height: calc(100vh - 100px);
-    padding: 50px 20px;
-}
-
-/* ===== HEADINGS ===== */
-.home-title {
-    color: #111827;
-}
-
-.home-title span {
-    color: #fb7185;
-}
-
-.home-subtitle {
-    color: #374151;
-}
-
-/* ===== GLASS CARD ===== */
-.glass-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 24px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
-    padding: 30px;
-}
-
-/* ===== CARD TEXT ===== */
-.glass-card h3 {
-    color: #111827;
-}
-
-.glass-card p {
-    color: #6b7280;
-}
-
-/* ===== BUTTONS ===== */
-.btn-outline-light {
-    color: #111827;
-    border: 1px solid #d1d5db;
-}
-
-.btn-outline-light:hover {
-    background: linear-gradient(135deg, #38bdf8, #fb7185);
-    color: #ffffff;
-    border-color: transparent;
-}
-</style>
-
-<div class="container home-page text-center">
-
-    <h1 class="display-3 fw-bold mb-3 home-title">
-        Welcome to <span>Smart Tutor</span>
-    </h1>
-
-    <p class="lead mb-5 home-subtitle">
-        Your AI-powered study companion. Summarize videos, track progress, and take quizzes.
-    </p>
+<div class="container text-center text-white py-5">
+    
+    <div class="py-5 mb-5">
+        <h1 class="display-3 fw-bold mb-3">Welcome to <span class="text-warning">AI Tutor</span></h1>
+        <p class="lead opacity-75 mb-4">Your intelligent study companion. Connect with students, manage tasks, and learn with AI.</p>
+        
+        {% if not current_user.is_authenticated %}
+            <a href="/signup" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg me-2">Get Started</a>
+            <a href="/login" class="btn btn-outline-light btn-lg px-5 rounded-pill">Login</a>
+        {% else %}
+            <a href="/dashboard" class="btn btn-success btn-lg px-5 rounded-pill shadow-lg">Go to Dashboard</a>
+        {% endif %}
+    </div>
 
     <div class="row g-4">
         
         <div class="col-md-4">
-            <div class="glass-card h-100 text-center">
+            <div class="glass-card p-4 h-100 hover-effect">
                 <div class="mb-3">
-                    <i class="fa-brands fa-youtube fa-3x text-danger"></i>
+                    <i class="fa-solid fa-users fa-3x text-info"></i>
                 </div>
-                <h3>Video Summarizer</h3>
-                <p>Paste any educational video link and get instant notes & summaries.</p>
-                <a href="/youtube" class="btn btn-outline-light mt-2">Try Now</a>
+                <h3 class="fw-bold">Student Community</h3>
+                <p class="opacity-75">Join the global student lounge. Chat, discuss doubts, and stay motivated with peers in real-time.</p>
+                <a href="/community" class="btn btn-sm btn-outline-info mt-3">Join Discussion</a>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="glass-card h-100 text-center">
+            <div class="glass-card p-4 h-100 hover-effect">
                 <div class="mb-3">
-                    <i class="fa-solid fa-brain fa-3x text-primary"></i>
+                    <i class="fa-solid fa-list-check fa-3x text-success"></i>
                 </div>
-                <h3>AI Quiz & Chat</h3>
-                <p>Test your knowledge with adaptive quizzes or ask doubts to AI.</p>
-                <a href="/chat" class="btn btn-outline-light mt-2">Start Quiz</a>
+                <h3 class="fw-bold">Smart To-Do</h3>
+                <p class="opacity-75">Organize your study goals. Add daily tasks and mark them as done to track your progress.</p>
+                <a href="/todo" class="btn btn-sm btn-outline-success mt-3">Manage Tasks</a>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="glass-card h-100 text-center">
+            <div class="glass-card p-4 h-100 hover-effect">
                 <div class="mb-3">
-                    <i class="fa-solid fa-chart-pie fa-3x text-success"></i>
+                    <i class="fa-solid fa-robot fa-3x text-warning"></i>
                 </div>
-                <h3>Student Dashboard</h3>
-                <p>Track your learning progress and performance graphs.</p>
-                <a href="/dashboard" class="btn btn-outline-light mt-2">View Stats</a>
+                <h3 class="fw-bold">AI Assistant</h3>
+                <p class="opacity-75">Stuck on a topic? Ask our AI Tutor anything or take adaptive quizzes to test your knowledge.</p>
+                <a href="/chat" class="btn btn-sm btn-outline-warning mt-3">Start Learning</a>
             </div>
         </div>
 
     </div>
 </div>
 
+<style>
+    /* Thoda Animation Home Page ke liye */
+    .hover-effect {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-effect:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+</style>
 {% endblock %}

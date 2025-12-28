@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5 text-white">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold"><i class="fa-solid fa-list-check text-success"></i> My Study <span class="text-info">Goals</span></h2>
+                <p class="opacity-75">Add topics you want to finish today!</p>
+            </div>
+
+            <div class="glass-card p-4">
+                <div class="input-group mb-4">
+                    <input type="text" id="taskInput" class="form-control bg-dark text-white border-secondary p-3" placeholder="Enter topic (e.g., Learn SQL Joins)..." onkeypress="handleEnter(event)">
+                    <button class="btn btn-success px-4" onclick="addTask()">
+                        <i class="fa-solid fa-plus"></i> Add
+                    </button>
+                </div>
+
+                <div id="todoList">
+                    {% if todos %}
+                        {% for todo in todos %}
+                            <div class="d-flex align-items-center justify-content-between p-3 mb-3 rounded bg-dark bg-opacity-25 fade-in" id="task-{{ todo.id }}">
+                                <span class="text-white fs-5">{{ todo.task }}</span>
+                                <button class="btn btn-outline-info rounded-circle" onclick="completeTask({{ todo.id }})" title="Mark as Done">
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div id="emptyMsg" class="text-center py-5 text-white-50">
+                            <i class="fa-solid fa-clipboard-list fa-3x mb-3"></i>
+                            <p>No tasks yet. Start by adding one!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function addTask() {
+        const input = document.getElementById('taskInput');
+        const taskText = input.value.trim();
+        if(!taskText) return;
+
+        const res = await fetch('/api/add_todo', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({task: taskText})
+        });
+        const data = await res.json();
+        
+        if(data.success) {
+            input.value = '';
+            const list = document.getElementById('todoList');
+            const emptyMsg = document.getElementById('emptyMsg');
+            if(emptyMsg) emptyMsg.remove();
+
+            const div = document.createElement('div');
+            div.className = "d-flex align-items-center justify-content-between p-3 mb-3 rounded bg-dark bg-opacity-25 fade-in";
+            div.id = `task-${data.id}`;
+            div.innerHTML = `
+                <span class="text-white fs-5">${data.task}</span>
+                <button class="btn btn-outline-info rounded-circle" onclick="completeTask(${data.id})" title="Mark as Done">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+            `;
+            list.prepend(div);
+        }
+    }
+
+    async function completeTask(id) {
+        const res = await fetch('/api/delete_todo', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id: id})
+        });
+        const data = await res.json();
+        
+        if(data.success) {
+            const el = document.getElementById(`task-${id}`);
+            // Disappear Animation
+            el.style.transition = "all 0.5s ease";
+            el.style.opacity = "0";
+            el.style.transform = "translateX(50px)";
+            setTimeout(() => {
+                el.remove();
+                if(document.getElementById('todoList').children.length === 0) {
+                    location.reload(); // Reload to show empty message
+                }
+            }, 500);
+        }
+    }
+
+    function handleEnter(e) {
+        if(e.key === 'Enter') addTask();
+    }
+</script>
+
+<style>
+    .fade-in { animation: fadeIn 0.5s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+{% endblock %}
