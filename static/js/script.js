@@ -199,7 +199,7 @@ function appendLoading() {
     const chatBox = document.getElementById('chat-box');
     const id = 'loading-' + Date.now();
     const loadingHTML = `...`; 
-    // Shortened for brevity, use previous loader code
+   
     const lHTML = `<div id="${id}" class="mb-3 text-white">Thinking...</div>`;
     chatBox.insertAdjacentHTML('beforeend', lHTML);
     chatBox.scrollTop = chatBox.scrollHeight;
