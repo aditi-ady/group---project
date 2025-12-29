@@ -3,7 +3,7 @@
 {% block content %}
 
 <style>
-/* ===== PAGE BACKGROUND ===== */
+
 .todo-page {
     background:
         radial-gradient(circle at 15% 20%, rgba(255, 221, 153, 0.7), transparent 40%),
@@ -13,7 +13,7 @@
     padding: 40px 15px;
 }
 
-/* ===== HEADER ===== */
+
 .todo-title {
     font-weight: 800;
     color: #111827;
@@ -29,7 +29,7 @@
     color: #374151;
 }
 
-/* ===== MAIN CARD ===== */
+
 .todo-card {
     background: rgba(255, 255, 255, 0.96);
     border-radius: 28px;
@@ -37,14 +37,14 @@
     padding: 30px;
 }
 
-/* ===== INPUT ===== */
+
 .form-control {
     border-radius: 16px;
     padding: 14px;
     font-size: 0.95rem;
 }
 
-/* ===== ADD BUTTON ===== */
+
 .btn-success {
     background: linear-gradient(135deg, #22c55e, #16a34a);
     border: none;
@@ -55,7 +55,7 @@
     transform: translateY(-2px);
 }
 
-/* ===== TASK ITEM ===== */
+
 .todo-item {
     background: #ffffff;
     border-radius: 18px;
@@ -72,14 +72,14 @@
     transform: translateY(-3px);
 }
 
-/* ===== TASK TEXT ===== */
+
 .todo-text {
     color: #111827;
     font-size: 1.05rem;
     font-weight: 600;
 }
 
-/* ===== CHECK BUTTON ===== */
+
 .btn-outline-primary {
     border-radius: 50%;
     border: 1px solid #f59e0b;
@@ -91,12 +91,12 @@
     color: white;
 }
 
-/* ===== EMPTY STATE ===== */
+
 .empty-text {
     color: #6b7280;
 }
 
-/* ===== ANIMATION ===== */
+
 .fade-in {
     animation: fadeIn 0.4s ease-in-out;
 }
@@ -130,10 +130,10 @@
                     </p>
                 </div>
 
-                <!-- CARD -->
+                
                 <div class="todo-card">
 
-                    <!-- INPUT -->
+                   
                     <div class="input-group mb-4">
                         <input
                             type="text"
@@ -147,7 +147,7 @@
                         </button>
                     </div>
 
-                    <!-- TASK LIST -->
+                   
                     <div id="todoList">
 
                         {% if todos %}
