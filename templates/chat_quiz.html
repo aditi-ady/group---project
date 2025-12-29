@@ -36,14 +36,14 @@
 
 <script>
 const chatBox = document.getElementById("chat-box");
-let currentSubject = "General"; // To track subject for score update
+let currentSubject = "General"; 
 
-// --- MESSAGE DISPLAY FUNCTION ---
+
 function appendMessage(type, sender, content) {
     const wrap = document.createElement("div");
     wrap.className = `d-flex mb-3 ${type === 'user' ? 'justify-content-end' : 'justify-content-start'}`;
     
-    // Agar Quiz hai toh HTML render karega, nahi to Text
+    
     wrap.innerHTML = `
         <div class="chat-bubble ${type}">
             <div class="chat-user">${sender}</div>
@@ -54,7 +54,7 @@ function appendMessage(type, sender, content) {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// --- SEND MESSAGE FUNCTION ---
+
 async function sendMessage() {
     const input = document.getElementById("user-input");
     const msg = input.value.trim();
@@ -63,7 +63,7 @@ async function sendMessage() {
     input.value = "";
     appendMessage("user", "You", msg);
 
-    // Show Loading Animation
+    
     const loadingId = "loading-" + Date.now();
     appendMessage("ai", "AI Tutor", `<span id="${loadingId}">Thinking... <i class="fa-solid fa-spinner fa-spin"></i></span>`);
 
@@ -76,10 +76,10 @@ async function sendMessage() {
 
         const data = await res.json();
         
-        // Remove "Thinking..." message
+        
         document.getElementById(loadingId).parentElement.parentElement.remove();
 
-        // CHECK: Is it a Quiz or Normal Chat?
+        
         if (data.type === 'quiz') {
             renderQuiz(data);
         } else {
@@ -92,7 +92,7 @@ async function sendMessage() {
     }
 }
 
-// --- RENDER QUIZ UI ---
+
 function renderQuiz(data) {
     currentSubject = data.subject || "General";
     let quizHtml = `<div class="mb-2"><strong>Topic: ${data.subject}</strong></div>`;
@@ -117,12 +117,12 @@ function renderQuiz(data) {
     appendMessage("ai", "AI Tutor", quizHtml);
 }
 
-// --- CHECK ANSWER FUNCTION ---
+
 function checkAnswer(btn, selected, correct) {
     const parent = btn.parentElement;
     const resultDiv = parent.nextElementSibling;
     
-    // Disable all buttons in this question
+  
     const allBtns = parent.querySelectorAll('button');
     allBtns.forEach(b => b.disabled = true);
 
@@ -138,7 +138,7 @@ function checkAnswer(btn, selected, correct) {
         resultDiv.innerHTML = `<span class="text-danger">Wrong! Correct was: ${correct}</span>`;
     }
 
-    // Update Database Score
+    
     fetch('/api/update_quiz_stats', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -152,7 +152,7 @@ function handleEnter(e) {
 </script>
 
 <style>
-/* STYLES WAHI PURANE WALE */
+
 .chat-bubble { max-width: 85%; padding: 14px 18px; border-radius: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); animation: fadeIn 0.3s ease; }
 .chat-bubble.user { background: linear-gradient(135deg, #ffedd5, #fde68a); color: #111827; }
 .chat-bubble.ai { background: #f3f4f6; color: #111827; }
