@@ -1,6 +1,4 @@
-/* =========================================
-   1. YOUTUBE SUMMARIZER LOGIC
-   ========================================= */
+
 
 async function generateSummary() {
     const urlInput = document.getElementById('youtubeURL');
@@ -50,7 +48,7 @@ function renderResults(data) {
         data.quiz.forEach((q, index) => {
             let optionsHTML = '';
             q.options.forEach(opt => {
-                // Pass Subject to checkAnswer function
+                
                 optionsHTML += `<button class="btn btn-outline-light btn-sm w-100 mb-2 text-start" 
                     onclick="checkAnswer(this, '${opt}', '${q.answer}', '${data.subject || 'General'}')">${opt}</button>`;
             });
@@ -61,9 +59,7 @@ function renderResults(data) {
     }
 }
 
-/* =========================================
-   2. GLOBAL SCORE UPDATER (Graph & Avg)
-   ========================================= */
+
 
 async function updateServerStats(isCorrect, subject) {
     try {
@@ -78,25 +74,23 @@ async function updateServerStats(isCorrect, subject) {
     }
 }
 
-// YouTube Quiz Check
+
 function checkAnswer(btn, selected, correct, subject) {
     if (selected === correct) {
         btn.classList.remove('btn-outline-light');
         btn.classList.add('btn-success');
         alert("✅ Correct!");
-        updateServerStats(true, subject); // Server ko batao
+        updateServerStats(true, subject); 
     } else {
         btn.classList.remove('btn-outline-light');
         btn.classList.add('btn-danger');
         alert("❌ Wrong!");
-        updateServerStats(false, subject); // Server ko batao
+        updateServerStats(false, subject); 
     }
 }
 
 
-/* =========================================
-   3. CHATBOT LOGIC
-   ========================================= */
+
 
 function handleEnter(event) {
     if (event.key === "Enter") sendMessage();
@@ -121,7 +115,7 @@ async function sendMessage() {
         document.getElementById(loadingId).remove();
 
         if (data.type === 'quiz') {
-            appendQuiz(data.questions, data.subject); // Pass subject
+            appendQuiz(data.questions, data.subject);
         } else {
             appendMessage('AI Tutor', data.reply, 'start');
         }
@@ -185,12 +179,12 @@ function checkChatQuiz(btn, selected, correct, subject) {
         btn.classList.remove('btn-outline-light');
         btn.classList.add('btn-success');
         btn.innerHTML += ' <i class="fa-solid fa-check"></i>';
-        updateServerStats(true, subject); // UPDATE GRAPH
+        updateServerStats(true, subject); 
     } else {
         btn.classList.remove('btn-outline-light');
         btn.classList.add('btn-danger');
         btn.innerHTML += ' <i class="fa-solid fa-xmark"></i>';
-        updateServerStats(false, subject); // UPDATE GRAPH
+        updateServerStats(false, subject); 
         
         allBtns.forEach(b => {
             if (b.innerText.includes(correct)) {
@@ -204,7 +198,7 @@ function checkChatQuiz(btn, selected, correct, subject) {
 function appendLoading() {
     const chatBox = document.getElementById('chat-box');
     const id = 'loading-' + Date.now();
-    const loadingHTML = `...`; // (Same loader code as before)
+    const loadingHTML = `...`; 
     // Shortened for brevity, use previous loader code
     const lHTML = `<div id="${id}" class="mb-3 text-white">Thinking...</div>`;
     chatBox.insertAdjacentHTML('beforeend', lHTML);
