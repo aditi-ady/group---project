@@ -1,6 +1,4 @@
-/* =========================
-   GLOBAL
-========================= */
+
 * {
     box-sizing: border-box;
 }
@@ -19,9 +17,7 @@ body {
     margin: 0;
 }
 
-/* =========================
-   NAVBAR
-========================= */
+
 .navbar {
     backdrop-filter: blur(14px);
     background: rgba(255, 255, 255, 0.85);
@@ -48,17 +44,13 @@ body {
     color: #111827 !important;
 }
 
-/* =========================
-   MAIN CONTENT
-========================= */
+
 .main-content {
     padding-top: 100px;
     padding-bottom: 60px;
 }
 
-/* =========================
-   HERO TEXT
-========================= */
+
 .hero-title {
     font-weight: 800;
     letter-spacing: -0.5px;
@@ -75,9 +67,7 @@ body {
     color: #374151;
 }
 
-/* =========================
-   CARDS
-========================= */
+
 .glass-card {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 22px;
@@ -92,9 +82,7 @@ body {
     box-shadow: 0 30px 60px rgba(0,0,0,0.18);
 }
 
-/* =========================
-   BUTTONS
-========================= */
+
 .btn-primary {
     background: linear-gradient(135deg, #ff512f, #f09819);
     border: none;
@@ -106,9 +94,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* =========================
-   TEXT HELPERS
-========================= */
+
 .text-muted {
     color: #374151 !important;
 }

@@ -3,7 +3,7 @@
 {% block content %}
 
 <style>
-/* ===== PAGE BACKGROUND ===== */
+
 .community-page {
     background:
         radial-gradient(circle at 15% 20%, rgba(255, 221, 153, 0.7), transparent 40%),
@@ -13,7 +13,7 @@
     padding: 40px 15px;
 }
 
-/* ===== HEADER ===== */
+
 .community-title {
     font-weight: 800;
     color: #111827;
@@ -29,7 +29,7 @@
     color: #374151;
 }
 
-/* ===== CHAT CARD ===== */
+
 .chat-card {
     background: rgba(255, 255, 255, 0.96);
     border-radius: 28px;
@@ -39,17 +39,17 @@
     flex-direction: column;
 }
 
-/* ===== CHAT BOX ===== */
+
 #chat-box {
     flex-grow: 1;
     padding: 20px;
     overflow-y: auto;
 }
 
-/* ===== MESSAGE BUBBLES ===== */
+
 .msg-me {
     background: linear-gradient(135deg, #ffb703, #ffd166);
-    color: #111827; /* dark text for readability */
+    color: #111827; 
     border-radius: 18px;
     padding: 10px 14px;
     max-width: 75%;
@@ -66,11 +66,11 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-/* ===== USERNAME ===== */
+
 .msg-user {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #92400e;   /* warm brown, visible on yellow */
+    color: #92400e;   
 }
 
 .msg-time {
@@ -78,7 +78,7 @@
     color: #78350f;
 }
 
-/* ===== INPUT AREA ===== */
+
 .chat-input {
     padding: 15px;
     border-top: 1px solid #fde68a;
@@ -91,7 +91,7 @@
     padding: 12px;
 }
 
-/* ===== SEND BUTTON ===== */
+
 .btn-send {
     background: linear-gradient(135deg, #22c55e, #16a34a);
     border: none;
@@ -110,7 +110,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
 
-                <!-- HEADER -->
+                
                 <div class="text-center mb-4">
                     <h2 class="community-title">
                         <i class="fa-solid fa-users me-2 text-success"></i>
@@ -121,17 +121,16 @@
                     </p>
                 </div>
 
-                <!-- CHAT CARD -->
+                
                 <div class="chat-card">
 
-                    <!-- CHAT BOX -->
+                    
                     <div id="chat-box">
                         <div class="text-center text-muted mt-5">
                             Loading messages...
                         </div>
                     </div>
 
-                    <!-- INPUT -->
                     <div class="chat-input">
                         <div class="input-group">
                             <input
